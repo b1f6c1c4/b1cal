@@ -24,6 +24,7 @@
     "graphql-subscriptions": "^1.1.0",
     "graphql-tools": "^4.0.4",
     "lodash": "^4.17.5",
+    "minimist": "^1.2.0",
     "mongoose": "^5.0.11",
     "nocache": "^2.0.0",
     "winston": "^3.2.1"
