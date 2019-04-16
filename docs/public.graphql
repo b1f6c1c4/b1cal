@@ -2,23 +2,25 @@
 
 type Query {
 
+  status: Status
+
   categories: [Category]
 
-  rangeEvents(input: RangeEventsInput): [Event]
+  events(input: RangeEventsInput): [Event]
 }
 
 type Mutation {
 
   upsertEvent(input: UpsertEventInput): Event
 
-  deleteEvent(input: DeleteEventInput): Bool
+  deleteEvent(input: DeleteEventInput): Boolean
 }
 
 # Inputs
 
 input RangeEventsInput {
-  start: Date!
-  end: Date!
+  start: Date
+  end: Date
 }
 
 input UpsertEventInput {
@@ -36,6 +38,11 @@ input DeleteEventInput {
 }
 
 # Objects
+
+type Status {
+  version: String
+  commitHash: String
+}
 
 type Category {
   name: String!

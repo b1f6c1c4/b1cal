@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const nocache = require('nocache');
 const bodyParser = require('body-parser');
-const { graphqlExpress } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server-express');
 const status = require('../status');
 const { schema } = require('./graphql');
 const logger = require('../logger')('index');
@@ -45,23 +45,29 @@ router.use(
     }
     next();
   },
-  graphqlExpress((req) => ({
-    schema,
-    context: {
-      auth: req.user,
-      ip: req.ip,
-    },
-    tracing: process.env.NODE_ENV !== 'production',
-    formatError: (err) => {
-      const e = {
-        message: err.message,
-        statusCode: _.get(err, 'originalError.statusCode'),
-        errorCode: _.get(err, 'originalError.errorCode'),
-      };
-      logger.trace('Return err', e);
-      return e;
-    },
-  })),
 );
+
+
+const apollo = new ApolloServer({
+  schema,
+  tracing: process.env.NODE_ENV !== 'production',
+  formatError: (err) => {
+    const e = {
+      message: err.message,
+      statusCode: _.get(err, 'originalError.statusCode'),
+      errorCode: _.get(err, 'originalError.errorCode'),
+    };
+    logger.trace('Return err', e);
+    return e;
+  },
+});
+
+apollo.applyMiddleware({
+  app: router,
+  path: '/graphql',
+  cors: false,
+  bodyParserConfig: false,
+  disableHealthCheck: true,
+});
 
 module.exports = router;

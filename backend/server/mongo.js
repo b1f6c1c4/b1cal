@@ -8,6 +8,9 @@ if (process.env.BACKEND_LOG === 'trace'
   mongoose.set('debug', true);
 }
 
+mongoose.set('useCreateIndex', true);
+mongoose.set('useNewUrlParser', true);
+
 const connectLocal = (dbName) => new Promise((resolve, reject) => {
   const host = process.env.MONGO_HOST || 'localhost';
   logger.debug('Mongo host', host);
@@ -51,7 +54,7 @@ const connect = async () => {
     return;
   }
   isConnected = true;
-  await connectLocal('ballot');
+  await connectLocal('b1cal');
 };
 
 const fixUpdate = (schema) => {
