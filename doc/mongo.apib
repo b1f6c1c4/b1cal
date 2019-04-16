@@ -1,0 +1,27 @@
+# MongoDB in b1cal
+
+# Data Structures
+
+## Event (object)
+
+### Properties
+- \_id (string, required) - eId
+- name (string, required)
+- category (string)
+- start (datatime, required)
+- end (datatime, required)
+- location (string)
+- comment (string)
+
+# Collections
+
+## events (array[Event])
+
+### Indexes
+
+- \_id - Unique Shard Key
+- name
+- category
+- compound index
+    - start
+    - end

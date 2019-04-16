@@ -1,0 +1,58 @@
+# Entry points
+
+type Query {
+
+  categories: [Category]
+
+  rangeEvents(input: RangeEventsInput): [Event]
+}
+
+type Mutation {
+
+  upsertEvent(input: UpsertEventInput): Event
+
+  deleteEvent(input: DeleteEventInput): Bool
+}
+
+# Inputs
+
+input RangeEventsInput {
+  start: Date!
+  end: Date!
+}
+
+input UpsertEventInput {
+  eId: ID
+  name: String!
+  category: String
+  start: Date!
+  end: Date!
+  location: String
+  comment: String
+}
+
+input DeleteEventInput {
+  eId: ID!
+}
+
+# Objects
+
+type Category {
+  name: String!
+  fgcolor: String!
+  bgcolor: String!
+}
+
+type Event {
+  eId: ID!
+  name: String!
+  category: String
+  start: Date!
+  end: Date!
+  location: String
+  comment: String
+}
+
+# Scalar
+
+scalar Date
