@@ -1,0 +1,23 @@
+{
+  "name": "b1cal-frontend",
+  "version": "1.0.0",
+  "description": "b1cal website.",
+  "repository": "https://github.com/b1f6c1c4/b1cal",
+  "author": "b1f6c1c4",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "generate": "plop --plopfile internals/generators/index.js",
+    "lint": "eslint --ignore-path .gitignore ."
+  },
+  "devDependencies": {
+    "pug": "^2.0.3"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-infinite-scroller": "^1.2.4"
+  }
+}

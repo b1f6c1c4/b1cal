@@ -1,0 +1,66 @@
+html, body, #app, .app {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 30px;
+  background: aqua;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.grid-container {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.grid-container::-webkit-scrollbar {
+  display: none;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+}
+
+.head {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.day {
+  flex-grow: 1;
+  flex-basis: 100%;
+}
+
+.grid-item {
+  height: 66px;
+  width: 100%;
+  border: 1px solid black;
+  word-break: break-all;
+  overflow: auto;
+}
+
+.scroller {
+  height: 40px;
+  background: red;
+  flex-shrink: 0;
+}
+
+.overlay {
+  height: 100%;
+  border: 2px solid black;
+  background-color: pink;
+  position: relative;
+  left: 50%;
+  width: 10%;
+}
