@@ -16,8 +16,9 @@
     "pug": "^2.0.3"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "components": "^0.1.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-infinite-scroller": "^1.2.4"
+    "react-dom": "^16.8.6"
   }
 }
