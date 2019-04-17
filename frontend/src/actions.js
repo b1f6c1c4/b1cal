@@ -24,9 +24,13 @@ export function deleteEvent(event) {
 }
 
 export const RECV_EVENT = 'RECV_EVENT';
-export function recvEvent(event) {
+export function recvEvent(event, eId) {
+  if (!eId) {
+    ({ eId } = event);
+  }
   return {
     type: RECV_EVENT,
+    eId,
     event,
   };
 }

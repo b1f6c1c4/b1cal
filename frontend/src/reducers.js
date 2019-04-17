@@ -18,7 +18,6 @@ function eventUpdate(state, dirty, event, eId) {
   const ev = fromJS(event);
   return state.withMutations((ctx) => {
     if (orig) {
-      console.log(orig);
       forEachDate(orig.toJS(), (d) => {
         ctx.deleteIn(['cache', d, eId]);
       });
@@ -46,11 +45,11 @@ export default function (state, action) {
         .setIn(['view', 'start'], action.start)
         .setIn(['view', 'end'], action.end);
     case actions.MODIFY_EVENT:
-      return eventUpdate(state, true, action.event)
+      return eventUpdate(state, true, action.event);
     case actions.DELETE_EVENT:
-      return eventUpdate(state, false, undefined, action.event.eId)
+      return eventUpdate(state, true, undefined, action.event.eId);
     case actions.RECV_EVENT:
-      return eventUpdate(state, false, action.event)
+      return eventUpdate(state, false, action.event, action.eId);
     default:
       return state;
   }

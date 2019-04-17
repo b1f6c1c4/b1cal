@@ -4,14 +4,20 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
 import { fromJS, Set } from 'immutable';
 import * as datefns from 'date-fns';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Root from './containers/Root';
 import reducers from './reducers';
+import rootSaga from './sagas';
 import './main.css';
 
-const middlewares = [];
+const saga = createSagaMiddleware();
+
+const middlewares = [
+  saga,
+];
 
 if (process.env.NODE_ENV !== 'production' || window.debug) {
   middlewares.push(createLogger({
@@ -48,6 +54,8 @@ const store = createStore(
   init,
   composeEnhancers(...enhancers),
 );
+
+saga.run(rootSaga);
 
 render((
   <Provider store={store}>
