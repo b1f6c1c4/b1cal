@@ -4,6 +4,7 @@ html, body, #app, .app {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  position: fixed;
 }
 
 .app {
@@ -19,18 +20,15 @@ html, body, #app, .app {
   border-bottom: 1px solid black;
 }
 
-.grid-container {
+.grid {
   flex-grow: 1;
   overflow-y: scroll;
-}
-
-.grid-container::-webkit-scrollbar {
-  display: none;
-}
-
-.grid {
   display: flex;
   flex-direction: row;
+}
+
+.grid::-webkit-scrollbar {
+  display: none;
 }
 
 .head {
@@ -38,6 +36,16 @@ html, body, #app, .app {
   flex-shrink: 0;
   border-right: 1px solid black;
   text-align: center;
+}
+
+.grid .head, .grid .days, .grid .day {
+  height: max-content;
+}
+
+@media only screen and (max-width: 800px) {
+  .head {
+    width: 75px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,7 +62,7 @@ html, body, #app, .app {
 }
 
 .grid-item {
-  height: 6%;
+  height: 5vh;
   width: 100%;
   border-bottom: 1px solid lightgray;
   word-break: break-all;

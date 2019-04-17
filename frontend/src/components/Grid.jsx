@@ -40,20 +40,19 @@ class Day extends PureComponent {
 
 export default class Grid extends PureComponent {
   render() {
-    const { shift, count } = this.props;
+    const { start, end, shift } = this.props;
+    const count = (end - start) / 86400000;
     return (
-      <div className="grid-container">
-        <div className="grid">
-          <Head shift={shift} />
-          <div className="days">
-            {_.times(count, (i) => (
-              <Day
-                key={i}
-                shift={shift}
-                count={count}
-              />
-            ))}
-          </div>
+      <div className="grid">
+        <Head shift={shift} />
+        <div className="days">
+          {_.times(count, (i) => (
+            <Day
+              key={i}
+              shift={shift}
+              count={count}
+            />
+          ))}
         </div>
       </div>
     );

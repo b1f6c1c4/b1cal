@@ -20,7 +20,7 @@ export default class App extends PureComponent {
     return (
       <div className="app">
         <Header start={start} end={end} />
-        <Grid start={start} end={end} shift={4} />
+        <Grid start={start} end={end} shift={8} />
         <Slider start={start} end={end} />
       </div>
     );
