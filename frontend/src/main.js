@@ -5,6 +5,7 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
+import persistState from 'redux-localstorage';
 import { fromJS, Set } from 'immutable';
 import * as datefns from 'date-fns';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -28,6 +29,25 @@ if (process.env.NODE_ENV !== 'production' || window.debug) {
 
 const enhancers = [
   applyMiddleware(...middlewares),
+  persistState(undefined, {
+    key: 'b1cal',
+    serialize: (state) => JSON.stringify({
+      start: datefns.format(state.getIn(['view', 'start']), 'yyyy-MM-dd'),
+      end: datefns.format(state.getIn(['view', 'end']), 'yyyy-MM-dd'),
+    }),
+    deserialize: (raw) => {
+      const parsed = JSON.parse(raw);
+      if (!parsed) {
+        return undefined;
+      }
+      const { start, end } = parsed;
+      return fromJS({
+        start: datefns.parseISO(start),
+        end: datefns.parseISO(end),
+      });
+    },
+    merge: (init, states) => init.mergeDeep(states),
+  }),
 ];
 
 /* eslint-disable no-underscore-dangle */

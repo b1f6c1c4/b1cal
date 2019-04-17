@@ -141,3 +141,16 @@ html, body, #app, .app {
   justify-content: center;
   color: white;
 }
+
+.day {
+  position: relative;
+}
+
+.event {
+  left: 0;
+  width: 100%;
+  position: absolute;
+  opacity: 0.8;
+  background-color: pink;
+  overflow: visible;
+}

@@ -19,12 +19,12 @@ function eventUpdate(state, dirty, event, eId) {
   return state.withMutations((ctx) => {
     if (orig) {
       forEachDate(orig.toJS(), (d) => {
-        ctx.deleteIn(['cache', d, eId]);
+        ctx.deleteIn(['cache', +d, eId]);
       });
     }
     if (event) {
       forEachDate(event, (d) => {
-        ctx.setIn(['cache', d, eId], ev);
+        ctx.setIn(['cache', +d, eId], ev);
       });
       ctx.setIn(['events', eId], ev);
     } else {
