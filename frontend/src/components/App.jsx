@@ -1,9 +1,15 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
 import * as datefns from 'date-fns';
 import Header from './Header';
 import Grid from './Grid';
 import Slider from './Slider';
 
+const mapStateToProps = (state) => ({ });
+
+const mapDispatchToProps = (dispatch, ownProps) => ({ });
+
+@connect(mapStateToProps, mapDispatchToProps)
 export default class App extends PureComponent {
   constructor() {
     super();

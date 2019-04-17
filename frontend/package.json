@@ -13,13 +13,20 @@
     "lint": "eslint --ignore-path .gitignore ."
   },
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-decorators": "^7.4.0",
     "pug": "^2.0.3"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "components": "^0.1.0",
     "date-fns": "^2.0.0-alpha.27",
+    "immutable": "^4.0.0-rc.12",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "redux": "^4.0.1",
+    "redux-immutable": "^4.0.0",
+    "redux-logger": "^3.0.6"
   }
 }
