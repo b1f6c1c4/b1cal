@@ -4,9 +4,10 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
 import { combineReducers } from 'redux-immutable';
 import { createLogger } from 'redux-logger';
-import { fromJS } from 'immutable';
+import { fromJS, Set } from 'immutable';
+import * as datefns from 'date-fns';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import App from './components/App';
+import Root from './containers/Root';
 import reducers from './reducers';
 import './main.css';
 
@@ -28,19 +29,29 @@ const composeEnhancers =
   process.env.NODE_ENV !== 'production' &&
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'b1cal' })
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'b1cal', trace: true })
   : compose;
 /* eslint-enable no-underscore-dangle */
 
+const today = datefns.parseISO(datefns.format(new Date(), 'yyyy-MM-dd'));
+const init = fromJS({
+  events: { },
+  view: {
+    start: today,
+    end: datefns.addDays(today, 7),
+  },
+  cache: { },
+}).set('dirty', new Set());
+
 const store = createStore(
   reducers,
-  fromJS({}),
+  init,
   composeEnhancers(...enhancers),
 );
 
 render((
   <Provider store={store}>
     <CssBaseline />
-    <App />
+    <Root />
   </Provider>
 ) , document.getElementById('app'));
