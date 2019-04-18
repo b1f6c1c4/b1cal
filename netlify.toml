@@ -1,0 +1,6 @@
+[Settings]
+ID = "5cb65dac-7036-4183-b40e-18c7eec08768"
+
+[build]
+  publish = "./dist"
+  command = "./ci-build.sh"
