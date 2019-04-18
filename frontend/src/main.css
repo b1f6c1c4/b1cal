@@ -154,3 +154,19 @@ html, body, #app, .app {
   background-color: pink;
   overflow: visible;
 }
+
+.draggables {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 16777215;
+  display: flex;
+  flex-direction: row;
+}
+
+.draggable {
+  background-color: transparent;
+  flex-grow: 1;
+}
