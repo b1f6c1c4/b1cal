@@ -10,7 +10,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateView: (e) => dispatch(actions.updateView(e)),
+  updateView: (e, forced = true) => dispatch(
+    forced
+    ? actions.updateView(e)
+    : actions.updateViewReq(e),
+  ),
 });
 
 @connect(mapStateToProps, mapDispatchToProps)

@@ -43,6 +43,13 @@ function Day({ shift, count, events }) {
 
 export default function Grid({ start, end, shift, cache }) {
   const count = (end - start) / 86400000;
+  if (count >= 120) {
+    return (
+      <div className="grid">
+        <div className="crazy">Are you crazy?</div>
+      </div>
+    );
+  }
   return (
     <div className="grid">
       <Head shift={shift} />

@@ -6,36 +6,65 @@ export default class Draggable extends PureComponent {
     this.draggable = React.createRef();
   }
 
-  handleDrag = (e) => {
+  handleDragMouse = (e) => {
     const width = this.draggable.current.offsetWidth;
     this.data = {
-      width,
-      delta: (e.pageX - this.startX) / width,
+      delta: (e.pageX - this.startX) / width * this.props.width,
     };
     this.props.onChange && this.props.onChange(this.data);
   };
 
-  handleStart = (e) => {
+  handleStartMouse = (e) => {
     this.startX = e.pageX;
-    document.addEventListener('mousemove', this.handleDrag);
-    document.addEventListener('mouseup', this.handleEnd);
-    document.addEventListener('mouseleave', this.handleEnd);
+    document.addEventListener('mousemove', this.handleDragMouse);
+    document.addEventListener('mouseup', this.handleEndMouse);
+    document.addEventListener('mouseleave', this.handleEndMouse);
   };
 
-  handleEnd = (e) => {
-    document.removeEventListener('mousemove', this.handleDrag);
-    document.removeEventListener('mouseup', this.handleEnd);
-    document.removeEventListener('mouseleave', this.handleEnd);
+  handleEndMouse = (e) => {
+    document.removeEventListener('mousemove', this.handleDragMouse);
+    document.removeEventListener('mouseup', this.handleEndMouse);
+    document.removeEventListener('mouseleave', this.handleEndMouse);
     this.props.onFinish && this.props.onFinish(this.data);
   };
 
+  handleDragTouch = (e) => {
+    const width = this.draggable.current.offsetWidth;
+    this.data = {
+      delta: (e.changedTouches[0].pageX - this.startX) / width * this.props.width,
+    };
+    this.props.onChange && this.props.onChange(this.data);
+  };
+
+  handleStartTouch = (e) => {
+    this.startX = e.changedTouches[0].pageX;
+    document.addEventListener('touchmove', this.handleDragTouch);
+    document.addEventListener('touchend', this.handleEndTouch);
+  };
+
+  handleEndTouch = (e) => {
+    document.removeEventListener('touchmove', this.handleDragTouch);
+    document.removeEventListener('touchend', this.handleEndTouch);
+    this.props.onFinish && this.props.onFinish(this.data);
+  };
+
+  preventDragHandler = (e) => {
+    e.preventDefault();
+  };
+
   render() {
+    const { left, width } = this.props;
     return (
       <div
         className="draggable"
+        style={{
+          left: `${100*left}%`,
+          width: `${100*width}%`,
+        }}
         ref={this.draggable}
-        onMouseDown={this.handleStart}
-        onTouchStart={this.handleStart}
+        onMouseDown={this.handleStartMouse}
+        onTouchStart={this.handleStartTouch}
+        onDragStart={this.preventDragHandler}
       />
     );
   }

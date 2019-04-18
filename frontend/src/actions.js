@@ -1,3 +1,12 @@
+export const UPDATE_VIEW_REQ = 'UPDATE_VIEW_REQ';
+export function updateViewReq({ start, end }) {
+  return {
+    type: UPDATE_VIEW_REQ,
+    start,
+    end,
+  };
+}
+
 export const UPDATE_VIEW = 'UPDATE_VIEW';
 export function updateView({ start, end }) {
   return {

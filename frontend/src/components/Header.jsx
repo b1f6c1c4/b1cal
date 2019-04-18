@@ -22,6 +22,13 @@ function HeaderDay({ date, count }) {
 
 export default function Header({ start, end }) {
   const count = (end - start) / 86400000;
+  if (count >= 120) {
+    return (
+      <div className="header">
+        <div className="crazy">Are you crazy?</div>
+      </div>
+    );
+  }
   return (
     <div className="header">
       <div className="head">b1cal</div>

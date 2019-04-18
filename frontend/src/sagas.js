@@ -1,7 +1,34 @@
 import 'babel-polyfill';
-import { delay } from 'redux-saga/effects';
-import { put, takeEvery } from 'redux-saga/effects';
+import _ from 'lodash';
+import { delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
+
+export function* watchUpdateViewReq() {
+  let req = undefined;
+  while (true) {
+    const racing = {
+      uv: take(actions.UPDATE_VIEW),
+      uvq: take(actions.UPDATE_VIEW_REQ),
+    };
+    if (req) {
+      racing.del = delay(150);
+    }
+    const { uv, uvq } = yield race(racing);
+    if (uv) {
+      req = undefined;
+    } else if (uvq) {
+      if (req !== undefined) {
+        req = uvq;
+      } else {
+        yield put(actions.updateView(uvq));
+        req = null;
+      }
+    } else if (req) {
+      yield put(actions.updateView(req));
+      req = null;
+    }
+  }
+}
 
 export function* syncModifyToBackend(action) {
   // TODO
@@ -16,6 +43,7 @@ export function* syncDeleteToBackend(action) {
 }
 
 export default function*() {
+  yield fork(watchUpdateViewReq);
   yield takeEvery('MODIFY_EVENT', syncModifyToBackend);
   yield takeEvery('DELETE_EVENT', syncDeleteToBackend);
 }
