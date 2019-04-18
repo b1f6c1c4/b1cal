@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
-import { combineReducers } from 'redux-immutable';
 import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import persistState from 'redux-localstorage';
@@ -51,10 +50,9 @@ const enhancers = [
 ];
 
 /* eslint-disable no-underscore-dangle */
-const composeEnhancers =
-  process.env.NODE_ENV !== 'production' &&
-  typeof window === 'object' &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+const composeEnhancers = process.env.NODE_ENV !== 'production'
+  && typeof window === 'object'
+  && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'b1cal', trace: true })
   : compose;
 /* eslint-enable no-underscore-dangle */
@@ -82,4 +80,4 @@ render((
     <CssBaseline />
     <Root />
   </Provider>
-) , document.getElementById('app'));
+), document.getElementById('app'));

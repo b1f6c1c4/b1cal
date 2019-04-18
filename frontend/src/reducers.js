@@ -4,7 +4,7 @@ import * as actions from './actions';
 
 function forEachDate(event, f) {
   const { start, end } = event;
-  let i = datefns.parseISO(datefns.format(new Date(), 'yyyy-MM-dd'));
+  let i = datefns.parseISO(datefns.format(start, 'yyyy-MM-dd'));
   for (; i < end; i = datefns.addDays(i, 1)) {
     f(i, event);
   }
@@ -53,4 +53,4 @@ export default function (state, action) {
     default:
       return state;
   }
-};
+}

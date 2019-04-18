@@ -1,11 +1,11 @@
 import 'babel-polyfill';
-import _ from 'lodash';
 import { delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
 
 export function* watchUpdateViewReq() {
-  let req = undefined;
+  let req;
   while (true) {
+    /* eslint-disable redux-saga/yield-effects */
     const racing = {
       uv: take(actions.UPDATE_VIEW),
       uvq: take(actions.UPDATE_VIEW_REQ),
@@ -13,6 +13,8 @@ export function* watchUpdateViewReq() {
     if (req) {
       racing.del = delay(150);
     }
+    /* eslint-enable redux-saga/yield-effects */
+    // eslint-disable-next-line redux-saga/no-yield-in-race
     const { uv, uvq } = yield race(racing);
     if (uv) {
       req = undefined;
@@ -42,7 +44,7 @@ export function* syncDeleteToBackend(action) {
   yield put(actions.recvEvent(undefined, action.event.eId));
 }
 
-export default function*() {
+export default function* () {
   yield fork(watchUpdateViewReq);
   yield takeEvery('MODIFY_EVENT', syncModifyToBackend);
   yield takeEvery('DELETE_EVENT', syncDeleteToBackend);

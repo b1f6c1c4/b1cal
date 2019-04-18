@@ -12,13 +12,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   updateView: (e, forced = true) => dispatch(
     forced
-    ? actions.updateView(e)
-    : actions.updateViewReq(e),
+      ? actions.updateView(e)
+      : actions.updateViewReq(e),
   ),
 });
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class Root extends PureComponent {
+class Root extends PureComponent {
   render() {
     return (
       <App {...this.props} />
