@@ -1,6 +1,7 @@
 import simpleOauth from 'simple-oauth2';
 
 export const config = {
+  api_key: process.env.API_KEY,
   clientId: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
   authorizePath: 'https://accounts.google.com/o/oauth2/v2/auth',

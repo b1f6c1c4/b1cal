@@ -1,23 +1,26 @@
-import oauth2, { config } from './utils/oauth'
+/* eslint-disable no-console */
+
+import oauth2, { config } from './utils/oauth';
 
 exports.handler = async (event, context, callback) => {
   const { code } = event.queryStringParameters;
 
   try {
-    const token = await oauth2.authorizationCode.getToken({
+    let token = await oauth2.authorizationCode.getToken({
       code,
       redirect_uri: config.redirect_uri,
       client_id: config.clientId,
       client_secret: config.clientSecret,
     });
 
-    const accessToken = oauth2.accessToken.create(token);
+    ({ token } = oauth2.accessToken.create(token));
+
+    const tokenStr = encodeURIComponent(JSON.stringify(token));
 
     return callback(null, {
       statusCode: 302,
       headers: {
-        'X-Token': JSON.stringify(token),
-        'X-AccessToken': JSON.stringify(accessToken),
+        'Set-Cookie': `token=${tokenStr}; api_key=${config.api_key}; Secure`,
         Location: '/app.html',
       },
       body: '',

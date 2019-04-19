@@ -6,6 +6,24 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <meta charset="UTF-8" />
+    <script>
+      function retrieve(name) {
+        let match = window.location.href.match(new RegExp(`${name}=([^&]*)`));
+        if (match) {
+          return decodeURIComponent(match[1]);
+        }
+        match = document.cookie.match(new RegExp(`${name}=([^;]*)`));
+        if (match) {
+          return decodeURIComponent(match[1]);
+        }
+        return undefined;
+      }
+      window.apiKey = retrieve('api_key');
+      window.token = JSON.parse(retrieve('token'));
+      if (!(window.apiKey && window.token)) {
+        window.location = '/';
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
