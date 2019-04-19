@@ -4,6 +4,10 @@ import * as datefns from 'date-fns';
 const gcal = axios.create({
   baseURL: 'https://www.googleapis.com/calendar/v3',
   params: { apiKey: window.apiKey },
+  headers: {
+    Authorization: `${window.token.token_type} ${window.token.access_token}`,
+  },
+  transformResponse: axios.defaults.transformResponse,
 });
 
 function patching(obj) {
@@ -14,16 +18,17 @@ function patching(obj) {
 }
 
 export async function getColors() {
-  const { data: { event } } = await gcal.get('/colors', {
+  const { error, data: { event } } = await gcal.get('/colors', {
     params: {
       fields: 'event',
     },
   });
+  if (error) throw error;
   return event;
 }
 
 export async function listEvents({ start, end }) {
-  const { data: { items } } = await gcal.get('/calendars/primary/events', {
+  const { error, data: { items } } = await gcal.get('/calendars/primary/events', {
     params: {
       singleEvents: true,
       timeMin: datefns.format(start, 'yyyy-MM-dd\'T\'HH:mm:ssXXX'),
@@ -31,11 +36,18 @@ export async function listEvents({ start, end }) {
       fields: 'items(id,colorId,description,end,htmlLink,id,location,start,summary)',
     },
   });
+  if (error) throw error;
+  for (const item of items) {
+    item.eId = item.id;
+    delete item.id;
+    item.start = datefns.parseISO(item.start.dateTime);
+    item.end = datefns.parseISO(item.end.dateTime);
+  }
   return items;
 }
 
 export async function insertEvent({ start, end, summary, description, colorId, location }) {
-  const { data } = await gcal.post('/calendars/primary/events', {
+  const { error, data } = await gcal.post('/calendars/primary/events', {
     params: {
       fields: 'items(id,colorId,description,end,htmlLink,id,location,start,summary)',
     },
@@ -48,11 +60,12 @@ export async function insertEvent({ start, end, summary, description, colorId, l
       location,
     },
   });
+  if (error) throw error;
   return data;
 }
 
 export async function updateEvent({ eId, start, end, summary, description, colorId, location }) {
-  const { data } = await gcal.patch(`/calendars/primary/events/${eId}`, {
+  const { error, data } = await gcal.patch(`/calendars/primary/events/${eId}`, {
     params: {
       fields: 'items(id,colorId,description,end,htmlLink,id,location,start,summary)',
     },
@@ -65,6 +78,7 @@ export async function updateEvent({ eId, start, end, summary, description, color
       location: patching(location),
     },
   });
+  if (error) throw error;
   return data;
 }
 

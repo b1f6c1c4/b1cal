@@ -16,6 +16,14 @@ export function updateView({ start, end }) {
   };
 }
 
+export const CREATE_EVENT = 'CREATE_EVENT';
+export function createEvent(event) {
+  return {
+    type: CREATE_EVENT,
+    event,
+  };
+}
+
 export const MODIFY_EVENT = 'MODIFY_EVENT';
 export function modifyEvent(event) {
   return {

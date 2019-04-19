@@ -9,6 +9,7 @@ import { fromJS, Set } from 'immutable';
 import * as datefns from 'date-fns';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Root from './containers/Root';
+import * as actions from './actions';
 import reducers from './reducers';
 import rootSaga from './sagas';
 import './main.css';
@@ -74,6 +75,11 @@ const store = createStore(
 );
 
 saga.run(rootSaga);
+
+store.dispatch(actions.updateView({
+  start: init.getIn(['view', 'start']),
+  end: init.getIn(['view', 'end']),
+}));
 
 render((
   <Provider store={store}>

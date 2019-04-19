@@ -45,6 +45,7 @@
       "consistent"
     ],
     "no-param-reassign": "off",
+    "no-restricted-syntax": "off",
     "import/newline-after-import": "error",
     "import/no-dynamic-require": "error",
     "import/no-extraneous-dependencies": [

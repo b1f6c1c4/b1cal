@@ -1,6 +1,7 @@
 import 'babel-polyfill';
-import { delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import { call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
+import * as api from './api';
 
 export function* watchUpdateViewReq() {
   let req;
@@ -27,25 +28,37 @@ export function* watchUpdateViewReq() {
       }
     } else if (req) {
       yield put(actions.updateView(req));
-      req = null;
+      req = undefined;
     }
   }
 }
 
-export function* syncModifyToBackend(action) {
-  // TODO
-  yield delay(1000);
-  yield put(actions.recvEvent(action.event));
+export function* listEventsFromBackend({ start, end }) {
+  const lst = yield call(api.listEvents, { start, end });
+  for (const item of lst) {
+    yield put(actions.recvEvent(item));
+  }
 }
 
-export function* syncDeleteToBackend(action) {
-  // TODO
-  yield delay(1000);
-  yield put(actions.recvEvent(undefined, action.event.eId));
+export function* syncCreateToBackend({ event }) {
+  const res = yield call(api.createEvent, event);
+  yield put(actions.recvEvent(res));
+}
+
+export function* syncModifyToBackend({ event }) {
+  const res = yield call(api.updateEvent, event);
+  yield put(actions.recvEvent(res));
+}
+
+export function* syncDeleteToBackend({ event }) {
+  yield call(api.deleteEvent, event);
+  yield put(actions.recvEvent(undefined, event.eId));
 }
 
 export default function* () {
   yield fork(watchUpdateViewReq);
+  yield takeEvery('UPDATE_VIEW', listEventsFromBackend);
+  yield takeEvery('CREATE_EVENT', syncCreateToBackend);
   yield takeEvery('MODIFY_EVENT', syncModifyToBackend);
   yield takeEvery('DELETE_EVENT', syncDeleteToBackend);
 }
