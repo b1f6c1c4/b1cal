@@ -52,7 +52,7 @@ export function* syncModifyToBackend({ event }) {
 
 export function* syncDeleteToBackend({ event }) {
   yield call(api.deleteEvent, event);
-  yield put(actions.recvEvent(undefined, event.eId));
+  yield put(actions.recvEvent(undefined, event.id));
 }
 
 export default function* () {

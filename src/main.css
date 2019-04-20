@@ -170,3 +170,16 @@ html, body, #app, .app {
   background-color: transparent;
   flex-grow: 1;
 }
+
+.event p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.summary {
+  font-weight: bold;
+}
+
+.description {
+  font-style: italic;
+}

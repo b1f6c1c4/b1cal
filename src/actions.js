@@ -41,13 +41,13 @@ export function deleteEvent(event) {
 }
 
 export const RECV_EVENT = 'RECV_EVENT';
-export function recvEvent(event, eId) {
-  if (!eId) {
-    ({ eId } = event);
+export function recvEvent(event, id) {
+  if (!id) {
+    ({ id } = event);
   }
   return {
     type: RECV_EVENT,
-    eId,
+    id,
     event,
   };
 }

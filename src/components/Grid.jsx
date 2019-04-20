@@ -26,7 +26,7 @@ function Day({ date, shift, count, events }) {
       if (end > 1) end = 1;
       rendered.push((
         <div
-          key={v.get('eId')}
+          key={v.get('id')}
           className="event"
           style={{
             top: `${100*start}%`,

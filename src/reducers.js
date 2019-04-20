@@ -2,38 +2,22 @@ import { fromJS } from 'immutable';
 import * as datefns from 'date-fns';
 import * as actions from './actions';
 
-function forEachDate(event, f) {
-  const { start, end } = event;
-  let i = datefns.parseISO(datefns.format(start, 'yyyy-MM-dd'));
-  for (; i < end; i = datefns.addDays(i, 1)) {
-    f(i, event);
+function eventUpdate(state, dirty, event, id) {
+  if (!id) {
+    ({ id } = event);
   }
-}
-
-function eventUpdate(state, dirty, event, eId) {
-  if (!eId) {
-    ({ eId } = event);
-  }
-  const orig = state.getIn(['events', eId]);
+  const orig = state.getIn(['events', id]);
   const ev = fromJS(event);
   return state.withMutations((ctx) => {
-    if (orig) {
-      forEachDate(orig.toJS(), (d) => {
-        ctx.deleteIn(['cache', +d, eId]);
-      });
-    }
     if (event) {
-      forEachDate(event, (d) => {
-        ctx.setIn(['cache', +d, eId], ev);
-      });
-      ctx.setIn(['events', eId], ev);
+      ctx.setIn(['events', id], ev);
     } else {
-      ctx.deleteIn(['events', eId]);
+      ctx.deleteIn(['events', id]);
     }
     if (dirty) {
-      ctx.set('dirty', ctx.get('dirty').add(eId));
+      ctx.set('dirty', ctx.get('dirty').add(id));
     } else {
-      ctx.deleteIn(['dirty', eId]);
+      ctx.deleteIn(['dirty', id]);
     }
   });
 }
@@ -47,9 +31,9 @@ export default function (state, action) {
     case actions.MODIFY_EVENT:
       return eventUpdate(state, true, action.event);
     case actions.DELETE_EVENT:
-      return eventUpdate(state, true, undefined, action.event.eId);
+      return eventUpdate(state, true, undefined, action.event.id);
     case actions.RECV_EVENT:
-      return eventUpdate(state, false, action.event, action.eId);
+      return eventUpdate(state, false, action.event, action.id);
     default:
       return state;
   }

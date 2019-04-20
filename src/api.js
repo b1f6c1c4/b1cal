@@ -38,8 +38,6 @@ export async function listEvents({ start, end }) {
   });
   if (error) throw error;
   for (const item of items) {
-    item.eId = item.id;
-    delete item.id;
     item.start = datefns.parseISO(item.start.dateTime);
     item.end = datefns.parseISO(item.end.dateTime);
   }
@@ -64,8 +62,8 @@ export async function insertEvent({ start, end, summary, description, colorId, l
   return data;
 }
 
-export async function updateEvent({ eId, start, end, summary, description, colorId, location }) {
-  const { error, data } = await gcal.patch(`/calendars/primary/events/${eId}`, {
+export async function updateEvent({ id, start, end, summary, description, colorId, location }) {
+  const { error, data } = await gcal.patch(`/calendars/primary/events/${id}`, {
     params: {
       fields: 'items(id,colorId,description,end,htmlLink,id,location,start,summary)',
     },
@@ -82,6 +80,6 @@ export async function updateEvent({ eId, start, end, summary, description, color
   return data;
 }
 
-export async function deleteEvent({ eId }) {
-  await gcal.delete(`/calendars/primary/events/${eId}`);
+export async function deleteEvent({ id }) {
+  await gcal.delete(`/calendars/primary/events/${id}`);
 }

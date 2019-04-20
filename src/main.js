@@ -65,7 +65,9 @@ const init = fromJS({
     start: today,
     end: datefns.addDays(today, 7),
   },
-  cache: { },
+  config: {
+    shift: 4,
+  },
 }).set('dirty', new Set());
 
 const store = createStore(

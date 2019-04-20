@@ -4,11 +4,11 @@ import Header from './Header';
 import Grid from './Grid';
 import Slider from './Slider';
 
-export default function App({ start, end, cache, updateView }) {
+export default function App({ shift, start, end, cache, updateView }) {
   return (
     <div className="app">
       <Header start={start} end={end} />
-      <Grid start={start} end={end} shift={8} cache={cache} />
+      <Grid start={start} end={end} shift={shift} cache={cache} />
       <Slider start={start} end={end} updateView={updateView} />
     </div>
   );
