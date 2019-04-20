@@ -1,7 +1,9 @@
 import 'babel-polyfill';
-import { call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import { apply, call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
-import * as api from './api';
+import GoogleCalendar from './api';
+
+const api = new GoogleCalendar();
 
 export function* watchUpdateViewReq() {
   let req;
@@ -34,24 +36,24 @@ export function* watchUpdateViewReq() {
 }
 
 export function* listEventsFromBackend({ start, end }) {
-  const lst = yield call(api.listEvents, { start, end });
+  const lst = yield call([api, 'listEvents'], { start, end });
   for (const item of lst) {
     yield put(actions.recvEvent(item));
   }
 }
 
 export function* syncCreateToBackend({ event }) {
-  const res = yield call(api.createEvent, event);
+  const res = yield call([api, 'createEvent'], event);
   yield put(actions.recvEvent(res));
 }
 
 export function* syncModifyToBackend({ event }) {
-  const res = yield call(api.updateEvent, event);
+  const res = yield call([api, 'updateEvent'], event);
   yield put(actions.recvEvent(res));
 }
 
 export function* syncDeleteToBackend({ event }) {
-  yield call(api.deleteEvent, event);
+  yield call([api, 'deleteEvent'], event);
   yield put(actions.recvEvent(undefined, event.id));
 }
 

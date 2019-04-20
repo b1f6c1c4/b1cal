@@ -39,8 +39,6 @@ const mapDispatchToProps = (dispatch) => ({
   ),
 });
 
-export default
-@connect(mapStateToProps, mapDispatchToProps)
 class Root extends PureComponent {
   render() {
     return (
@@ -48,3 +46,5 @@ class Root extends PureComponent {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Root);

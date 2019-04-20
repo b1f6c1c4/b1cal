@@ -7,10 +7,8 @@ exports.handler = (event, context, callback) => callback(null, {
   headers: {
     Location: oauth2.authorizationCode.authorizeURL({
       redirect_uri: config.redirect_uri,
-      scope: [
-        'https://www.googleapis.com/auth/calendar.events',
-        // 'https://www.googleapis.com/auth/calendar.readonly',
-      ],
+      scope: 'https://www.googleapis.com/auth/calendar.events',
+      access_type: 'offline',
     }),
     'Cache-Control': 'no-cache',
   },

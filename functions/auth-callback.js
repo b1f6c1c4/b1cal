@@ -6,21 +6,21 @@ exports.handler = async (event, context, callback) => {
   const { code } = event.queryStringParameters;
 
   try {
-    let token = await oauth2.authorizationCode.getToken({
+    const token = await oauth2.authorizationCode.getToken({
       code,
       redirect_uri: config.redirect_uri,
       client_id: config.clientId,
       client_secret: config.clientSecret,
     });
 
-    ({ token } = oauth2.accessToken.create(token));
+    const accessToken = oauth2.accessToken.create(token);
 
-    const tokenStr = encodeURIComponent(JSON.stringify(token));
+    const tokenStr = encodeURIComponent(JSON.stringify(accessToken.token));
 
     return callback(null, {
       statusCode: 302,
       headers: {
-        'Set-Cookie': `token=${tokenStr}; api_key=${config.api_key}; Secure`,
+        'Set-Cookie': `token=${tokenStr}; api_key=${config.api_key}; Secure; Path=/`,
         Location: '/app.html',
       },
       body: '',
@@ -30,7 +30,7 @@ exports.handler = async (event, context, callback) => {
     console.log(error);
     return callback(null, {
       statusCode: error.statusCode || 500,
-      body: 'Oops',
+      body: '',
     });
   }
 };
