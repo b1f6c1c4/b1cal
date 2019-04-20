@@ -20,10 +20,10 @@ exports.handler = async (event) => {
     return {
       statusCode: 302,
       headers: {
-        'Set-Cookie': [
-          `token=${tokenStr}; Secure; Path=/`,
-          `api_key=${config.api_key}; Secure; Path=/`,
-        ],
+        // Look, this is AWS Lambda
+        // https://stackoverflow.com/a/45137300
+        'Set-Cookie': `token=${tokenStr}; Secure; Path=/`,
+        'set-Cookie': `api_key=${config.api_key}; Secure; Path=/`,
         Location: '/app.html',
       },
       body: '',
