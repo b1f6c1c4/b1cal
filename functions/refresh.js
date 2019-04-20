@@ -4,7 +4,7 @@ import oauth2, { config } from './utils/oauth';
 
 exports.handler = async (event) => {
   try {
-    const match = event.cookie.match(/token=([^;])*/);
+    const match = event.headers.cookie.match(/token=([^;]*)/);
     if (!match) {
       throw new Error('Cookie not found');
     }

@@ -30,6 +30,12 @@ export default function (state, action) {
       return state
         .setIn(['view', 'start'], action.start)
         .setIn(['view', 'end'], action.end);
+    case actions.MARK_CLEAN:
+      return state.set('clean', state.get('clean').withMutations((ctx) => {
+        action.dates.forEach((d) => {
+          ctx.add(d);
+        });
+      }));
     case actions.MODIFY_EVENT:
       return eventUpdate(state, true, action.event);
     case actions.DELETE_EVENT:

@@ -60,7 +60,7 @@ const init = fromJS({
   config: {
     shift: 4,
   },
-}).set('dirty', new Set());
+}).set('dirty', new Set()).set('clean', new Set());
 
 const store = createStore(
   reducers,

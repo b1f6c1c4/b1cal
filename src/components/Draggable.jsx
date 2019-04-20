@@ -25,7 +25,10 @@ export default class Draggable extends PureComponent {
     document.removeEventListener('mousemove', this.handleDragMouse);
     document.removeEventListener('mouseup', this.handleEndMouse);
     document.removeEventListener('mouseleave', this.handleEndMouse);
-    this.props.onFinish && this.props.onFinish(this.data);
+    if (this.data) {
+      this.props.onFinish && this.props.onFinish(this.data);
+    }
+    this.data = undefined;
   };
 
   handleDragTouch = (e) => {
@@ -45,7 +48,10 @@ export default class Draggable extends PureComponent {
   handleEndTouch = (e) => {
     document.removeEventListener('touchmove', this.handleDragTouch);
     document.removeEventListener('touchend', this.handleEndTouch);
-    this.props.onFinish && this.props.onFinish(this.data);
+    if (this.data) {
+      this.props.onFinish && this.props.onFinish(this.data);
+    }
+    this.data = undefined;
   };
 
   preventDragHandler = (e) => {

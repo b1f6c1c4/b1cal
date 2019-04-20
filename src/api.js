@@ -102,11 +102,15 @@ export default class GoogleCalendar {
       },
     });
     if (error) throw error;
+    const good = [];
     for (const item of items) {
-      item.start = datefns.parseISO(item.start.dateTime);
-      item.end = datefns.parseISO(item.end.dateTime);
+      if (item.start.dateTime && item.end.dateTime) {
+        item.start = datefns.parseISO(item.start.dateTime);
+        item.end = datefns.parseISO(item.end.dateTime);
+        good.push(item);
+      }
     }
-    return items;
+    return good;
   }
 
   @retryWithRefresh

@@ -16,6 +16,14 @@ export function updateView({ start, end }) {
   };
 }
 
+export const MARK_CLEAN = 'MARK_CLEAN';
+export function markClean(dates) {
+  return {
+    type: MARK_CLEAN,
+    dates,
+  };
+}
+
 export const CREATE_EVENT = 'CREATE_EVENT';
 export function createEvent(event) {
   return {

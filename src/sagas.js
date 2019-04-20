@@ -1,5 +1,6 @@
 import 'babel-polyfill';
-import { call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import { select, call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import * as datefns from 'date-fns';
 import * as actions from './actions';
 import GoogleCalendar from './api';
 
@@ -14,7 +15,7 @@ export function* watchUpdateViewReq() {
       uvq: take(actions.UPDATE_VIEW_REQ),
     };
     if (req) {
-      racing.del = delay(150);
+      racing.del = delay(50);
     }
     /* eslint-enable redux-saga/yield-effects */
     // eslint-disable-next-line redux-saga/no-yield-in-race
@@ -36,9 +37,35 @@ export function* watchUpdateViewReq() {
 }
 
 export function* listEventsFromBackend({ start, end }) {
-  const lst = yield call([api, 'listEvents'], { start, end });
-  for (const item of lst) {
-    yield put(actions.recvEvent(item));
+  const clean = yield select((state) => state.get('clean'));
+  let st = datefns.addDays(start, -2);
+  let ed = datefns.addDays(end, +2);
+  for (; st < ed; st = datefns.addDays(st, +1)) {
+    if (!clean.has(+st)) {
+      break;
+    }
+  }
+  for (; st < ed; ed = datefns.addDays(st, -1)) {
+    if (!clean.has(+ed)) {
+      break;
+    }
+  }
+  if (st >= ed) {
+    return;
+  }
+  try {
+    const lst = yield call([api, 'listEvents'], { start: st, end: ed });
+    const dates = [];
+    for (; st < ed; st = datefns.addDays(st, 1)) {
+      dates.push(+st);
+    }
+    yield put(actions.markClean(dates));
+    for (const item of lst) {
+      yield put(actions.recvEvent(item));
+    }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
   }
 }
 
