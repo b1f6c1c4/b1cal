@@ -1,5 +1,4 @@
 import { fromJS } from 'immutable';
-import * as datefns from 'date-fns';
 import * as actions from './actions';
 
 function eventUpdate(state, dirty, event, id) {
@@ -7,6 +6,9 @@ function eventUpdate(state, dirty, event, id) {
     ({ id } = event);
   }
   const orig = state.getIn(['events', id]);
+  if (orig === event) {
+    return state;
+  }
   const ev = fromJS(event);
   return state.withMutations((ctx) => {
     if (event) {

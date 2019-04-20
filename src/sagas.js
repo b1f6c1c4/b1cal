@@ -1,5 +1,5 @@
 import 'babel-polyfill';
-import { apply, call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
+import { call, delay, fork, put, race, take, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
 import GoogleCalendar from './api';
 

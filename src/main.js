@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore, compose } from 'redux';
-import { createLogger } from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import persistState from 'redux-localstorage';
 import { fromJS, Set } from 'immutable';
@@ -19,13 +18,6 @@ const saga = createSagaMiddleware();
 const middlewares = [
   saga,
 ];
-
-if (process.env.NODE_ENV !== 'production' || window.debug) {
-  middlewares.push(createLogger({
-    predicate: (getState, { type }) => !type || !type.startsWith('@@redux-form'),
-    level: 'debug',
-  }));
-}
 
 const enhancers = [
   applyMiddleware(...middlewares),

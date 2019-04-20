@@ -2,7 +2,7 @@
 
 import oauth2, { config } from './utils/oauth';
 
-exports.handler = async (event, context, callback) => {
+exports.handler = async (event) => {
   const { code } = event.queryStringParameters;
 
   try {
@@ -17,20 +17,23 @@ exports.handler = async (event, context, callback) => {
 
     const tokenStr = encodeURIComponent(JSON.stringify(accessToken.token));
 
-    return callback(null, {
+    return {
       statusCode: 302,
       headers: {
-        'Set-Cookie': `token=${tokenStr}; api_key=${config.api_key}; Secure; Path=/`,
+        'Set-Cookie': [
+          `token=${tokenStr}; Secure; Path=/`,
+          `api_key=${config.api_key}; Secure; Path=/`,
+        ],
         Location: '/app.html',
       },
       body: '',
-    });
+    };
   } catch (error) {
     console.log('Access Token Error', error.message);
     console.log(error);
-    return callback(null, {
+    return {
       statusCode: error.statusCode || 500,
       body: '',
-    });
+    };
   }
 };

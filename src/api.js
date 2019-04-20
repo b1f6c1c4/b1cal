@@ -22,7 +22,6 @@ if (!(apiKey && token)) {
   token = JSON.parse(token);
 }
 
-
 function patching(obj) {
   if (obj === undefined) {
     return null;
@@ -38,10 +37,8 @@ async function refresh() {
 
 function retryWithRefresh({ descriptor }) {
   const { value } = descriptor;
-  if (typeof value !== 'function') {
-    return descriptor;
-  }
-  descriptor.value = async function(...args) {
+  // eslint-disable-next-line func-names
+  descriptor.value = async function (...args) {
     let result;
     try {
       result = await value.apply(this, args);
@@ -62,6 +59,7 @@ function retryWithRefresh({ descriptor }) {
       }
       window.location = '/';
     }
+    return undefined;
   };
 }
 
@@ -126,7 +124,7 @@ export default class GoogleCalendar {
         location,
       },
     });
-    if (data.error) throw error;
+    if (data.error) throw data.error;
     return data;
   }
 
@@ -145,7 +143,7 @@ export default class GoogleCalendar {
         location: patching(location),
       },
     });
-    if (data.error) throw error;
+    if (data.error) throw data.error;
     return data;
   }
 
