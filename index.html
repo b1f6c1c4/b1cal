@@ -1,13 +1,108 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta content="ie=edge" http-equiv="x-ua-compatible">
     <meta name="description" content="b1cal - The calendar.">
+    <meta name="keywords" content="calendar,b1cal">
+    <meta name="author" content="b1f6c1c4">
     <title>b1cal - The calendar.</title>
-    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="src/index.css">
   </head>
   <body>
-    <p><a href="https://cal.b1f6c1c4.info/.netlify/functions/auth">Login with Google Calendar</a></p>
+
+  <div id="colorlib-page">
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="colorlib-navbar-brand">
+              <span class="colorlib-logo" href="#">b1cal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="colorlib-hero" class="js-fullheight">
+      <div class="owl-carousel owl-theme">
+        <div class="item">
+          <div class="hero-flex js-fullheight">
+            <div class="col-three-forth">
+              <div class="hero-img js-fullheight" style="background-image: url(images/img_bg_1.jpg);"></div>
+            </div>
+            <div class="col-one-forth js-fullheight">
+              <div class="display-t js-fullheight">
+                <div class="display-tc js-fullheight">
+                  <h2 class="number">01/03</h2>
+                  <div class="text-inner">
+                    <div class="desc">
+                      <span class="tag">rational</span>
+                      <h2>Makes sense.</h2>
+                      <p>b1cal does not group days by weeks or months. You're expected to see a continuous, uninterrupted flow of hours and days.</p>
+                      <p><a href="https://cal.b1f6c1c4.info/.netlify/functions/auth" class="btn-view">Login with Google -&gt;</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="hero-flex js-fullheight">
+            <div class="col-three-forth">
+              <div class="hero-img js-fullheight" style="background-image: url(images/img_bg_2.jpg);"></div>
+            </div>
+            <div class="col-one-forth js-fullheight">
+              <div class="display-t js-fullheight">
+                <div class="display-tc js-fullheight">
+                  <h2 class="number">02/03</h2>
+                  <div class="text-inner">
+                    <div class="desc">
+                      <span class="tag">respectful</span>
+                      <h2>Your habit matters.</h2>
+                      <p>Days don't necessarily starts at midnight! Events that span across midnight are nolonger confusing and hard to manage.</p>
+                      <p><a href="https://cal.b1f6c1c4.info/.netlify/functions/auth" class="btn-view">Login with Google -&gt;</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="hero-flex js-fullheight">
+            <div class="col-three-forth">
+              <div class="hero-img js-fullheight" style="background-image: url(images/img_bg_3.jpg);"></div>
+            </div>
+            <div class="col-one-forth js-fullheight">
+              <h2 class="number">03/03</h2>
+              <div class="display-t js-fullheight">
+                <div class="display-tc js-fullheight">
+                  <div class="text-inner">
+                    <div class="desc">
+                      <span class="tag">amazing</span>
+                      <h2>No migration.</h2>
+                      <p>You may already have your Google Calendar and iCalendar accounts with thousands of events. We are only providing an <i>overlay</i> over your existing calendars. You can even use both b1cal and the old calendar at the same time!</p>
+                      <p><a href="https://cal.b1f6c1c4.info/.netlify/functions/auth" class="btn-view">Login with Google -&gt;</a></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script src="src/index.js"></script>
   </body>
 </html>

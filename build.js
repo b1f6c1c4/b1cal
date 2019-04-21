@@ -8,8 +8,8 @@ process.env.NODE_ENV = 'production';
 
 async function makeBundle() {
   const bundler = new Bundler([
-    './index.html',
-    './app.html',
+    'index.html',
+    'app.html',
   ]);
 
   await bundler.bundle();
