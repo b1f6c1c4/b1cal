@@ -8,8 +8,7 @@
   "private": true,
   "scripts": {
     "start": "parcel index.html app.html",
-    "build": "parcel build index.html app.html",
-    "build:functions": "netlify-lambda build functions",
+    "build": "node build.js",
     "lint": "eslint --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -42,6 +41,7 @@
     "eslint-plugin-redux-saga": "^1.0.0",
     "netlify-lambda": "^1.4.5",
     "parcel-bundler": "^1.12.3",
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "shelljs": "^0.8.3"
   }
 }
