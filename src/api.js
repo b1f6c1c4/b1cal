@@ -13,13 +13,12 @@ function retrieve(name) {
   return undefined;
 }
 
-let apiKey = retrieve('api_key');
-let token = retrieve('token');
+let credential = retrieve('credential');
 
-if (!(apiKey && token)) {
+if (!credential) {
   window.location = '/';
 } else {
-  token = JSON.parse(token);
+  credential = JSON.parse(credential);
 }
 
 function patching(obj) {
@@ -31,8 +30,7 @@ function patching(obj) {
 
 async function refresh() {
   await axios.get('/.netlify/functions/refresh');
-  apiKey = retrieve('api_key');
-  token = JSON.parse(retrieve('token'));
+  credential = JSON.parse(retrieve('credential'));
 }
 
 function retryWithRefresh({ descriptor }) {
@@ -69,15 +67,18 @@ export default class GoogleCalendar {
   }
 
   makeApi() {
+    /* eslint-disable camelcase */
+    const { apiKey, token: { token_type, access_token } } = credential;
     this.gcal = axios.create({
       baseURL: 'https://www.googleapis.com/calendar/v3',
       params: { apiKey },
       headers: {
-        Authorization: `${token.token_type} ${token.access_token}`,
+        Authorization: `${token_type} ${access_token}`,
       },
       validateStatus: null,
       transformResponse: axios.defaults.transformResponse,
     });
+    /* eslint-enable camelcase */
   }
 
   @retryWithRefresh

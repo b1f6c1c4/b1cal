@@ -4,21 +4,22 @@ import oauth2, { config } from './utils/oauth';
 
 exports.handler = async (event) => {
   try {
-    const match = event.headers.cookie.match(/token=([^;]*)/);
+    const match = event.headers.cookie.match(/credential=([^;]*)/);
     if (!match) {
       throw new Error('Cookie not found');
     }
-    const token = JSON.parse(decodeURIComponent(match[1]));
+    const { token } = JSON.parse(decodeURIComponent(match[1]));
     let accessToken = oauth2.accessToken.create(token);
 
     accessToken = await accessToken.refresh();
+    accessToken.apiKey = config.api_key;
 
-    const tokenStr = encodeURIComponent(JSON.stringify(accessToken.token));
+    const tokenStr = encodeURIComponent(JSON.stringify(accessToken));
 
     return {
       statusCode: 204,
       headers: {
-        'Set-Cookie': `token=${tokenStr}; api_key=${config.api_key}; Secure`,
+        'Set-Cookie': `credential=${tokenStr}; Secure; Path=/`,
       },
       body: '',
     };

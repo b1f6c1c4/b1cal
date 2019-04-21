@@ -14,16 +14,14 @@ exports.handler = async (event) => {
     });
 
     const accessToken = oauth2.accessToken.create(token);
+    accessToken.apiKey = config.api_key;
 
-    const tokenStr = encodeURIComponent(JSON.stringify(accessToken.token));
+    const tokenStr = encodeURIComponent(JSON.stringify(accessToken));
 
     return {
       statusCode: 302,
       headers: {
-        // Look, this is AWS Lambda
-        // https://stackoverflow.com/a/45137300
-        'Set-Cookie': `token=${tokenStr}; Secure; Path=/`,
-        'set-Cookie': `api_key=${config.api_key}; Secure; Path=/`,
+        'Set-Cookie': `credential=${tokenStr}; Secure; Path=/`,
         Location: '/app.html',
       },
       body: '',
