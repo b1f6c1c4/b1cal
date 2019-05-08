@@ -25,6 +25,7 @@ html, body, #app, .app {
   overflow-y: scroll;
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .grid::-webkit-scrollbar {
@@ -182,4 +183,16 @@ html, body, #app, .app {
 
 .description {
   font-style: italic;
+}
+
+.fabs {
+  position: absolute;
+  right: 4vw;
+  bottom: calc(40px + 4vw);
+  display: flex;
+  flex-direction: column;
+}
+
+.fabs > button {
+  margin: 5px 0 5px 0;
 }

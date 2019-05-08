@@ -26,16 +26,18 @@ const enhancers = [
     serialize: (state) => JSON.stringify({
       start: datefns.format(state.getIn(['view', 'start']), 'yyyy-MM-dd'),
       end: datefns.format(state.getIn(['view', 'end']), 'yyyy-MM-dd'),
+      config: state.get('config').toJS(),
     }),
     deserialize: (raw) => {
       const parsed = JSON.parse(raw);
       if (!parsed) {
         return undefined;
       }
-      const { start, end } = parsed;
+      const { start, end, config } = parsed;
       return fromJS({
         start: datefns.parseISO(start),
         end: datefns.parseISO(end),
+        config,
       });
     },
     merge: (init, states) => init.mergeDeep(states),
@@ -60,7 +62,11 @@ const init = fromJS({
   config: {
     shift: 4,
   },
-}).set('dirty', new Set()).set('clean', new Set());
+  command: 'scroll',
+})
+  .set('dirty', new Set())
+  .set('clean', new Set())
+  .set('selection', new Set());
 
 const store = createStore(
   reducers,

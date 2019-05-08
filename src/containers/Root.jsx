@@ -28,7 +28,14 @@ const mapStateToProps = (state) => {
       });
     });
   });
-  return { shift, start, end, cache };
+  const command = state.get('command');
+  return {
+    shift,
+    start,
+    end,
+    cache,
+    command,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,6 +44,19 @@ const mapDispatchToProps = (dispatch) => ({
       ? actions.updateView(e)
       : actions.updateViewReq(e),
   ),
+  commandCancel: () => dispatch(actions.commandCancel()),
+  commandDelete: () => dispatch(actions.commandDelete()),
+  commandRange: () => dispatch(actions.commandRange()),
+  commandSelect: () => dispatch(actions.commandSelect()),
+  commandCreate: () => dispatch(actions.commandCreate()),
+  commandCopy: () => dispatch(actions.commandCopy()),
+  commandMove: () => dispatch(actions.commandMove()),
+  commandEdit: () => dispatch(actions.commandEdit()),
+  commandCreateNext: () => dispatch(actions.commandCreateNext()),
+  commandCreateOK: () => dispatch(actions.commandCreateOK()),
+  commandEditOK: () => dispatch(actions.commandEditOK()),
+  commandCopyOK: () => dispatch(actions.commandCopyOK()),
+  commandMoveOK: () => dispatch(actions.commandMoveOK()),
 });
 
 class Root extends PureComponent {

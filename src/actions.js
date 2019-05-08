@@ -59,3 +59,94 @@ export function recvEvent(event, id) {
     event,
   };
 }
+
+export const COMMAND_CANCEL = 'COMMAND_CANCEL';
+export function commandCancel() {
+  return {
+    type: COMMAND_CANCEL,
+  };
+}
+
+export const COMMAND_DELETE = 'COMMAND_DELETE';
+export function commandDelete() {
+  return {
+    type: COMMAND_DELETE,
+  };
+}
+
+export const COMMAND_RANGE = 'COMMAND_RANGE';
+export function commandRange() {
+  return {
+    type: COMMAND_RANGE,
+  };
+}
+
+export const COMMAND_SELECT = 'COMMAND_SELECT';
+export function commandSelect() {
+  return {
+    type: COMMAND_SELECT,
+  };
+}
+
+export const COMMAND_CREATE = 'COMMAND_CREATE';
+export function commandCreate() {
+  return {
+    type: COMMAND_CREATE,
+  };
+}
+
+export const COMMAND_COPY = 'COMMAND_COPY';
+export function commandCopy() {
+  return {
+    type: COMMAND_COPY,
+  };
+}
+
+export const COMMAND_MOVE = 'COMMAND_MOVE';
+export function commandMove() {
+  return {
+    type: COMMAND_MOVE,
+  };
+}
+
+export const COMMAND_EDIT = 'COMMAND_EDIT';
+export function commandEdit() {
+  return {
+    type: COMMAND_EDIT,
+  };
+}
+
+export const COMMAND_CREATE_NEXT = 'COMMAND_CREATE_NEXT';
+export function commandCreateNext() {
+  return {
+    type: COMMAND_CREATE_NEXT,
+  };
+}
+
+export const COMMAND_CREATE_OK = 'COMMAND_CREATE_OK';
+export function commandCreateOK() {
+  return {
+    type: COMMAND_CREATE_OK,
+  };
+}
+
+export const COMMAND_EDIT_OK = 'COMMAND_EDIT_OK';
+export function commandEditOK() {
+  return {
+    type: COMMAND_EDIT_OK,
+  };
+}
+
+export const COMMAND_COPY_OK = 'COMMAND_COPY_OK';
+export function commandCopyOK() {
+  return {
+    type: COMMAND_COPY_OK,
+  };
+}
+
+export const COMMAND_MOVE_OK = 'COMMAND_MOVE_OK';
+export function commandMoveOK() {
+  return {
+    type: COMMAND_MOVE_OK,
+  };
+}

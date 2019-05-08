@@ -42,6 +42,33 @@ export default function (state, action) {
       return eventUpdate(state, true, undefined, action.event.id);
     case actions.RECV_EVENT:
       return eventUpdate(state, false, action.event, action.id);
+    case actions.COMMAND_CANCEL:
+      return state.set('command', 'scroll')
+        .set('selection', new Set());
+    case actions.COMMAND_DELETE:
+      return state.set('command', 'scroll'); // TODO
+    case actions.COMMAND_RANGE:
+      return state.set('command', 'range');
+    case actions.COMMAND_SELECT:
+      return state.set('command', 'select');
+    case actions.COMMAND_CREATE:
+      return state.set('command', 'create');
+    case actions.COMMAND_COPY:
+      return state.set('command', 'copy');
+    case actions.COMMAND_MOVE:
+      return state.set('command', 'move');
+    case actions.COMMAND_EDIT:
+      return state.set('command', 'edit');
+    case actions.COMMAND_CREATE_NEXT:
+      return state.set('command', 'create'); // TODO
+    case actions.COMMAND_CREATE_OK:
+      return state.set('command', 'scroll'); // TODO
+    case actions.COMMAND_EDIT_OK:
+      return state.set('command', 'scroll'); // TODO
+    case actions.COMMAND_COPY_OK:
+      return state.set('command', 'scroll'); // TODO
+    case actions.COMMAND_MOVE_OK:
+      return state.set('command', 'scroll'); // TODO
     default:
       return state;
   }
