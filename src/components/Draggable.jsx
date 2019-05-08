@@ -41,7 +41,9 @@ export default class Draggable extends PureComponent {
 
   handleStartTouch = (e) => {
     this.startX = e.changedTouches[0].pageX;
-    document.addEventListener('touchmove', this.handleDragTouch);
+    document.addEventListener('touchmove', this.handleDragTouch, {
+      passive: false,
+    });
     document.addEventListener('touchend', this.handleEndTouch);
   };
 
